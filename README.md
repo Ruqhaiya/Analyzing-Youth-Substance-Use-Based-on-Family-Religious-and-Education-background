@@ -1,5 +1,5 @@
-# 
-## Table of Contents
+# Analyzing and Predicting Substance Abuse in Youth using Decision Trees and Ensemble Methods
+## Table of Contents 
 - [](#)
   - [Table of Contents](#table-of-contents)
   - [Abstract](#abstract)
