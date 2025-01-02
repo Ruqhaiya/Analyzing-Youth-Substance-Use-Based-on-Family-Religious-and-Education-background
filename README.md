@@ -1,178 +1,199 @@
-# Analyzing and Predicting Dwelling Occupancy in Washington State
-
+# 
 ## Table of Contents
-- [Abstract](#abstract)
-- [Introduction](#introduction)
-- [Theoretical Background](#theoretical-background)
-- [Methodology](#methodology)
-- [Computational Results](#computational-results)
-- [Discussion](#discussion)
-- [Conclusion](#conclusion)
-- [References](#references)
+- [](#)
+  - [Table of Contents](#table-of-contents)
+  - [Abstract](#abstract)
+  - [Introduction](#introduction)
+  - [Theoretical Background](#theoretical-background)
+  - [Methodology](#methodology)
+  - [Computational Results](#computational-results)
+  - [Discussion](#discussion)
+  - [Conclusion](#conclusion)
+  - [References](#references)
 
 --- 
 
 ## Abstract
-The aim of this study is to predict whether a dwelling is occupied by owners or renters based on several features related to individual demographics and housing characteristics. We have used Support Vector Machines (SVM) to classify the dataset. Our models achieved up to 82% accuracy in classifying dwellings. It was observed that factors such as Age and Number of bedrooms were significant predictors in determining whether a dwelling is owned or rented followed by other predictors like average house income and cost of utilities. Among the models we built, the linear kernel was recommended for its robustness and simplicity. The findings of this study provides a thorough analysis of the factors influencing dwelling occupancy and uncover deeper patterns which will be useful to real estate professionals in understanding housing trends. 
+This study leverages the National Survey on Drug Use and Health (NSDUH) to explore different aspects of youth drug use using decision trees and ensemble methods. This project addresses three key predictions: identifying whether an individual uses alcohol with the help of binary classification, then estimating the frequency of alcohol use over the past year using multi-class classification, and finally predicting the age at which an individual first consumed alcohol using regression techniques. From our analysis, several variables proved to be significant predictors across different models. Factors related to educational achievements (EDUSCHGRD2) and demographic factors such as race (NEWRACE2), income levels (INCOME), and lifetime marijuana use (YFLMJMO) and alcohol consumption standards (STNDALC) were influential in predicting youth drug use behaviors. The binary classification gradient boosting model achieved a good accuracy of 83.12%, however the multi-class classification and regression tasks showed relatively poor performance but nonetheless gave us some insights about the factors related to youth substance abuse. These findings highlight the crucial role of both socio-demographic variables and substance use history in predicting drug use. The findings advocate for the critical role of family background and education in mitigating risky behaviors and provide insights for improving preventive strategies.
 
 [Back to top](#table-of-contents)
 
 ---
 
 ## Introduction
-Renters tend to skew toward the lower ends of the economic scale when it comes to income and wealth, according to data from the Federal Reserve’s 2019 Survey of Consumer Finances[1]. The primary goal of this study is to predict whether dwellings are occupied by owners or renters based on various demographic and housing-related factors. By using three different Support Vector Machines (SVM) kernels—linear, radial basis function (RBF), and polynomial, we not only seek to explore the predictive capabilities of these models but also gain insights into the underlying patterns within the data.
+This study employs data from the National Survey on Drug Use and Health (NSDUH), an annual survey conducted to gather information about substance use and related behaviors from U.S. residents aged 12 and older. The dataset includes responses related to the use and frequency of the use of alcohol, marijuana, and tobacco. There is a group of variables that are responses to questions about youth’s attitude regarding substance use, what they feel about substance use, as well as how they feel about their peers involved in substance use, and how their parents feel about substance use, whether they have been praised by their teachers or parents. Along with this, the dataset also has responses to whether youth was involved in a fight, or theft as well as their involvement in religious events and participation in team building or leadership activities. 
 
-The dataset is obtained from the US Census, accessed through IPUMS USA[2]. This dataset is comprehensive with a wide range of variables including individual demographic information such as age, income, education level, and marital status as well as housing characteristics like electricity cost, year of construction, and population density of the surrounding area. These variables offer a rich source of information for understanding how individual attributes relate to whether people own or rent their homes. 
+Through this study, we aim to find important factors that can help us understand youth’s behavior toward alcohol. The outcomes of this research will provide valuable guidance for public health initiatives that are aimed at reducing substance use among youth. 
 
-Throughout this report, we will explore the dataset and pre-process it. Pre-processing the data plays an essential role in generating insights that we can trust. The goal is to understand the application of SVMs to classification tasks and analyze how different kernel functions influence model performance. We will examine the relationships between selected variables and housing occupancy. 
+We have used decision trees and ensemble models to make three key predictions: 
+1. Identifying Alcohol Use - Binary Classification: The first task is to predict whether an individual uses alcohol. This is a binary classification where the model will predict a 'yes' or 'no' based on various predictors related to demographic details, youth experiences etc. 
+2. Estimating Frequency of Alcohol Use - Multi-Class Classification: The second task is where we are estimating the frequency of alcohol use over the past year. The model puts individuals into multiple groups based on how often they consumed alcohol in the last year.
+3. Predicting Age of First Alcohol Use - Regression Analysis: The third task is to predict the age at which an individual consumed alcohol for the first time. This is done using regression techniques.
 
 [Back to top](#table-of-contents)
 
 ---
 
 ## Theoretical Background
-Support Vector Machines(SVMS) are supervised learning methods used for classification and regression problems. SVM is a common term used to refer to the maximal margin classifier, support vector machine and the support vector machine. However, Support vector machine is a generalization of maximal margin classifier which requires data to be linearly separable. The support vector classifier is an extension of the maximal margin classifier which can be applied to a broader variety of datasets. The support vector machine is an extension of the support vector classifier and SVM can be used in cases where the data has a non-linear boundary. 
+Decision tree is a supervised learning approach used for classification or regression tasks. Decision trees are built using a top-down greedy or recursive binary splitting. Initially all the observations belong to a single node at the top of the tree or the ‘root’ if we look at it upside down. Then it successively splits the predictor space, each split results in two new branches further down on the tree. It is called ‘greedy’ because at each step of the tree-building process, the best split is made at that particular step, rather than looking further ahead and selectively picking a split that will result in a better tree. The splits are made based on some splitting criterion such as Gini index– a measure of purity of the resulting split, For regression trees the splitting criterion is essentially a measure of residual squared sum, or RSS. The process of splitting goes on until a stopping criteria is reached, for instance, we may continue until no region contains more than five observations[2] or when no more improvement is expected in the performance. The stopping criterion can be specified in terms of tree depth and the optimal tree size is usually found using cross-validation with various tree sizes. 
 
-The support vector machine uses a hyperplane to separate the classes. A hyperplane in a p-dimensional space is a flat subspace of dimension p-1. In 2D, a hyperplane is a line and in 3D, it is a plane. When p>3, it’s hard to visualize a hyperplane but the concept of p-1 dimensional subspace still applies.  A hyperplane is in p-dimension is defined by the equation: 
-β0 + β1X1 + β2X2 + · · · + βpXp = 0				eq(1)
+Tuning for decision trees is essentially performing a cross validation and pruning it with the optimal tree size found via cross validation. Pruning a tree mainly reduces the complexity of the model which means there may not be any significant improvement in the accuracy of the model but the overall tree would be easier to comprehend. Decision tree models tend to perform poorly when the feature space is large but due their ease of interpretability, these models are quite robust. Datasets with many categorical variables are also suitable for decision tree models as we don’t necessarily need to encode them. To improve the predictive power, ensemble methods like bagging, random forest, gradient boosting come into the picture.
 
-A point X= (X1,X2, . . . ,Xp)T in p-dimensional space lies on the hyperplane if it satisfies the eq(1). If eq(1) is greater than 0, X is on one side of the hyperplane, and if it is less than 0, X is on the other side. However, if data is perfectly linearly separable, there can be infinite hyperplanes as shown in figure 1 [3]. 
+Bootstrap aggregation or bagging is an ensemble technique that is used to reduce the variance of a statistical learning method. It is used in situations where it is challenging to directly compute the standard deviation of a quantity. The decision trees suffer from high variance. This means that if we randomly split the training data into two different sets, and build a decision tree to both sets, the results obtained could be quite different. If we have a set of n independent observations Z1, . . . , Zn with variance  2, the variance of the mean Z of the observations is given by    2n. This simply means averaging a set of observations reduces variance. Hence, to reduce the variance and increase the test accuracy of a statistical learning method is to take many training sets from the dataset and build a separate model using each set and average the resulting predictions. Bagging is applied to regression trees by simply constructing B regression trees using B bootstrapped training sets, and averaging the resulting predictions. These trees are grown deep, and are not pruned. Hence each individual tree has high variance, but low bias. Averaging these B trees reduces the variance. Bagging has been demonstrated to give impressive improvements in accuracy by combining together hundreds or even thousands of trees into a single procedure[2]. In the context of classification problems, a simple bagging approach is to go by majority. For instance, for a given test observation, the class predicted by each of the B trees is recorded and a majority vote is taken, the final prediction is the most commonly occurring majority class among the B predictions. Although bagging is an improvement to decision trees but not when it comes to interpretability, hence we have something to the rescue called the ‘feature importance’. We can display a summary of the importance of each predictor variable using the RSS (for bagging regression trees) or the Gini index (for bagging classification trees). In the case of bagging regression trees, we can record the total amount that the RSS is decreased due to splits over a given predictor, averaged over all B trees. A large value indicates an important predictor. Similarly, in the context of bagging classification trees, we can add up the total amount that the Gini index is decreased by splits over a given predictor, averaged over all B trees.
 
-![image](https://github.com/user-attachments/assets/4ba2984e-c497-4a6e-995b-be13a26e09db)
+Random forests provide a further improvement over bagged trees with a small tweak that decorrelates the trees. Similar to bagging, we build a number of decision trees on bootstrapped training sets. But when building these decision trees, at each split, a random sample of m predictors is chosen from the full set of p predictors. The split is allowed to use only one of those m predictors. A fresh sample of m predictors is taken at each split, and typically we choose mp meaning the number of predictors that are considered at each split are approximately equal to the square root of the total number of predictors. There’s an interesting rationale behind this, if there is a strong predictor, that predictor will most likely be in all the bagged trees, meaning all trees end up becoming similar to each other. By limiting the number of predictors, other less strong predictors will have a higher chance of being able to determine an outcome. The resulting average trees are more reliable because of this phenomenon. 
 
-Figure 1
-This is why choosing the hyperplane is crucial for the analysis, which is why we have the maximal margin classifier.  It is the optimal hyperplane– separating two classes–that is farthest from the training data. The SVM uses the principle of maximizing the distance between nearest data points from the hyperplane from either class. The distance between the hyperplane and the point is called as margin as shown 
+The ensemble models like bagging and random forest will produce an out-of-bag, OOB, error estimation, a measure of prediction error. When training these models, bootstrap samples of the original data are used, so the samples that are not used are called the “out-of-bag” samples. They are used to calculate the OOB error. Tuning this model will involve cross validating a range of m predictors to find the maximum number of features at each split.
 
-The SVM operates on the idea of increasing the space between the closest points of each group and the dividing line, which is the hyperplane. The gap between this line and the nearest point is what we call the margin, as demonstrated in figure (2) [3].
-
-![image](https://github.com/user-attachments/assets/11ec01b6-35bf-4d9a-b013-9768636fc298)
-
-Figure 2
-
-The nearest data points to the hyperplane are called the support vectors. Larger distance between the margin makes the model better. The mechanism of finding the hyperplane is fully accomplished by a subset of the training samples and the support vectors. Therefore, the support vectors play an essential role in determining the position of the hyperplane, and removing other training data points does not have any effect on the model but removing support vectors could affect our model performance drastically. They help in determining the optimal hyperplane for the dataset. 
-
-A classifier based on separating hyperplanes is good until an observation arrives which is far from the hyperplane, this shifts the hyperplane  and results in a tiny margin. Then our confidence in the classification based on thin margin decreases. To tackle this, we have a Support vector classifier that is more robust to individual observations, although we make a trade-off here unlike in the Maximal Margin Classifier where we have a hard margin, here we allow few misclassifications and call it a soft-margin. We trade a small portion of our model’s performance to get better overall results. Rather than having the optimal maximal margin so that data are on the correct side of the hyperplane and margin, we instead allow some data to be on the incorrect side of the margin, or even the hyperplane as shown in Figure (3) [3].
-
- ![image](https://github.com/user-attachments/assets/cfaff2db-3bf8-47f0-aa0a-5192e031431b)
-
-Figure 3: observations 11 and 12  are on the wrong side of the hyperplane and the wrong side of the margin.
-This solution is defined as: ε_i ≥ 0, Σ_(i=1)^n ε_i ≤ C  			eq(2)
-
-Where C is a tuning parameter. We try to find the highest possible C for our model, which means we want to allow misclassifications while also wanting our model to perform well. 
-If ε_i = 0 then the ith observation is on the correct side of the margin, If ε_i  > 0 then the ith observation is on the wrong side of the margin, meaning it has violated the margin. If ε_i  > 1 then it is on the wrong side of the hyperplane itself. 
-
-C tuning parameter is often referred to as the budget, because we have a certain budget to allow misclassifications. The value of c controls the tradeoff between the model's ability to fit the training data and its ability to generalize to new data. SVM's kernel hyperparameter is crucial for model performance, with options including linear, polynomial, and radial kernels. Different kernels enlarge the feature space in a specific way. Tuning these hyperparameters can have a significant effect on model accuracy.
-
-Polynomial kernel is used when data is not linearly separable, so a polynomial function is used to separate the data. For instance, by increasing the feature space using quadratic, cubic, and even higher-order polynomial functions of the predictors.So instead of fitting a support vector classifier using p features X1,X2, . . . ,Xp, we instead fit a support vector classifier using 2p features X^1, X1^2, X^2, X2^2 , . . . ,Xp,Xp^2. The basic idea is to transform the input data into a higher-dimensional space where it can be linearly separated, and then build a linear model on top of it to separate the classes. The kernel function used in polynomial kernel SVM is defined as 
- [3]
-where x and y are input feature vectors, c is a constant, and d is the degree of the polynomial. When d is 1, the polynomial kernel is just a linear kernel, and when d is higher, the kernel function puts the data into a higher-dimensional space. The degree parameter controls the complexity of the polynomial function used to separate the data. If the degree is too low, the model may not be able to separate the data effectively, and if the degree is too high, the model might be overfitting and perform poorly on new data. Tuning these hyperparameters is important for achieving good performance with polynomial kernel SVMs. 
-The RBF kernel (Radial Basis Function), uses gamma to check if a new data point, let's say x^*, is near or far from the points we know. If x^* is far away, the radial kernel, with the help of gamma, basically says this point doesn't matter much for making predictions. This way, only the points that are really close to x^* influences what the prediction will be. RBF is defined as:
- 
-Why do we not enlarge space using the original features? Using kernels is computationally lighter, because SVMs are computationally expensive and enlarging features could create infinite dimensions. 
-When there are more than 2 classes, the two most popular methods to use are the one-versus-one and one-versus-all.  One-versus-one creates a classifier for every possible pair of classes. If we have K classes, this means we will have K(K−1)/2 classifiers. Each classifier votes for an observation to belong to one of two classes. The class that gets the most votes across all classifiers is the final choice for where the observation fits.
-
-The one-versus-all method, also known as one-versus-rest, is another approach where we create one classifier per class, comparing each class against all the others combined. Each classifier gives a confidence score for its class, and the one with the highest score decides the class for the observation.
+In gradient boosting technique, the trees are grown successively, using a “slow” learning approach where information from the previous tree is used to improve the predictability of the decision tree. The current tree is trained in such a way that it corrects errors of the previous trees using residuals. There are three tuning parameters in the boosting method such as the learning rate, the number of trees and the number of splits in each tree that can be used.
 
 [Back to top](#table-of-contents)
 
 ---
 
 ## Methodology
-The dataset provided a unique challenge as each row represented a dwelling with multiple occupants living in the same house. SERIAL provides a unique identification number for each household in a dwelling and we observed that there are multiple records for a single household. More than 50% of the dataset is redundant with only ~30k unique households. 
-We have subsetted the data by grouping each household by SERIAL column and only keeping the row which has the highest age, meaning the oldest individual of the household. This is because it is highly likely that they might be the renter or the owner.  
 
-Then we analyzed the dataset further and decided to remove these columns for the reasons mentioned below:
+**Data Preparation**:
 
-●	PERWT: This variable is used when we want to do individual person analysis and it is not directly related to predicting home ownership, so having it is not required for our study.
+This study focuses on analyzing youth’s behavior based on factors related to their family, demographic details such as where they reside–urban or rural areas– and their experiences at school and religious beliefs. We removed data where the information about parents was either not known, deliberately not answered or the youth was 18+ years. We have also filtered out the data where the education background of an individual was unknown. Then data was further filtered to include individuals that belonged to densely populated or urban neighborhoods to address a particular group of youth that reside in urban areas. Features related to youth experiences’ such as involvement in religious events, praise from teachers had a few missing values across the dataset, hence rows where response was either unknown or not answered were excluded from the dataset as it might contribute to the noise in the dataset. The dataset was split using 80% of the original data for the training set and 20% for the testing set for all the classification and regression tasks.
 
-●	BRTHYR: BRTHYR corresponds to the date of birth of a person and it was deleted as we have the AGE variable, this column is repetitive.
+**Models**:
 
-●	PERNUM: This column corresponds to the number of people in a family. It is directly not relevant since we are taking the eldest member from each family. But we will encode it like 1 for PERNUM > 1 and 0 for PERNUM ==1. This might be a good piece of information for our models. 
+We merged demographic indicators and features related to youth experiences and alcohol flag for the binary classification task. A Decision tree was used to predict whether the individual had ever used alcohol. To improve the model, pruning was implemented by finding the optimal tree size using cross-validation technique. 
 
-●	AGE: We took the maximum age from the rows to align it with our assumption that older individuals in the household will be the owner or renter. 
+Ensemble methods like random forest classifier, bagging and gradient booting were also used for the binary classification task. For all three methods, best parameters were found using grid search cross validation technique. For instance, an optimal number of maximum features was found for random forest, best n_estimators parameter and number of trees at each split for bagging was calculated and lastly, the optimal learning rate was found for the boosting method. Feature importances were analyzed for all the models. 
 
-●	EDUCD : We deleted this column from the data set since it's correlated with the EDUC, it’s repetitive. 
+For multi-class classification tasks, we are estimating the frequency of alcohol use over the past year using the ‘ALCDAYS’ as the target variable which has 5 categories based on the number of days. Similar to the binary classification task, we used a decision tree classifier, pruned decision tree, random forest and boosting. All models were cross-validated to find the optimal parameters. 
 
-●	INCTOT : We took the mean for this column as it gives us the average income of the household. 
-
-●	HHINCOME : We removed this as it's highly correlated to average income INCTOT. 
-
-After fitting the first model, it was noticed that the accuracy is 100% and it definitely means our model is overfitting. A decision tree classifier was used initially to analyze what’s causing this. We found that it was the VALUEH column that holds the value of each household, it was a perfect separator. It makes perfect sense that the prediction can be easily made with the help of this data. Hence, we removed this column from the dataset. 
-
-Svm is not good with too many categories, so we converted the MARST to a binary variable, 0 if an individual is single and 1 otherwise. 
-Then we addressed the data columns that included the cost of electricity, water, gas, and fuel. The predictors associated with these records had a particular code 9999, 9993, 9997 that indicated whether there was no cost or if these expenses were already included in the rent. It was crucial to replace these values with 0 to avoid model inaccuracy. After subsetting, although we had 30k rows but we used a sample of 10K 
-rows because the SVM was taking a long time to compute, 10k is also a good size for a dataset.
-
-We used SVM for classification tasks to accurately identify the houses, using a variety of demographic and environmental parameters as predictors such as age, education level, family income, and cost of maintaining a property. We used cross-validation techniques to assess the performance of our model. Later, we expanded the model to include the RBF kernel and polynomial kernel with varying cost, gamma, and polynomial degree values. 
-
-We found that even after training the model with several hyperparameters, the results were comparable to what we were achieving with the linear SVM model although using the radial kernel, we achieved a slightly higher accuracy of 82%. Choosing the linear model as the final model is a good decision because it requires less computational effort to achieve almost similar outcomes. In summary, our process includes recognizing and addressing outliers, considering how to aggregate the data based on the unique features, and then training the SVM model, tuning it to choose the best parameters and evaluating its performance on the test dataset.
+For the regression task, the goal was to predict the age of initial alcohol use. The data was filtered to only include individuals over the age of 7 years and exclude where the response for the target feature IRALCAGE was unknown. Decision tree regressor, and ensemble methods like random forest and boosting regressor were employed to predict the age of initial alcohol consumption. Mean squared error was calculated for all the models since it is a regression task. Feature importances were analyzed to understand which predictors has the most influence. 
 
 [Back to top](#table-of-contents)
 
 ---
 
 ## Computational Results
-To build the model to classify the dwelling as rented or owned, we have used various variables like income, marital status, education and the cost which is involved in the household such as cost of gas, electricity and fuel. We have achieved 82% accuracy in classifying the dwelling. We have used linear, RBF and polynomial kernels to train the machine learning model. We cross validated the model using cost, gamma, and degree hyperparameters. It was observed that the model was giving almost similar accuracy with the RBF and linear kernel. Hence, it’s advised to use the linear kernel since it is a robust model that requires comparatively less computation power. A linear SVM model is also less prone to overfitting. 
 
-We used a decision boundary plot to visualize the model’s performance. Plot for the linear SVM model is shown in figure 4. The plot was constructed using Age and Bedrooms features from the dataset that were significant for the model. Only two features were used because it's easier to depict how the SVM finds optimal boundaries between classes in a two-dimensional space.
+**Binary classification task**:
 
- ![image](https://github.com/user-attachments/assets/da631f5b-1a5c-4eb7-8895-7f910179ef03)
+Table1 shows the results for the binary classification task which predicted whether an individual will use alcohol or not. The gradient boosting technique proved to be the best method for this task with an accuracy of 83.12% followed by other ensemble methods. The decision tree model performed decently after pruning it. 
 
-Figure 4
+| Model                          | Accuracy |
+|--------------------------------|----------|
+| Decision tree classifier       | 72.24%   |
+| Pruned decision tree           | 79.18%   |
+| Random forest classifier       | 81.39%   |
+| Bagging                        | 80.91%   |
+| Gradient boosting classifier   | 83.12%   |
 
-The SVM model's decision boundary clearly shows a linear separation between homeowners and renters, achieving an accuracy of 81.2%. As age increases, depicted by higher values on the x-axis, the likelihood of owning a home also increases—this is visible as the blue region, representing homeowners, expands with age. Similarly, homes with more bedrooms are more likely to be owned, which is consistent with the expectation that larger families or more financially stable individuals tend to own their properties. These findings align with common observations that older individuals, who typically have greater financial stability, are more likely to own homes. The relationship between larger homes and homeownership also suggests that families needing more space are more inclined to buy rather than rent. 
+Table1: Binary classification results
 
- ![image](https://github.com/user-attachments/assets/7fae411e-6c27-4fad-a088-cc373feb122f)
+Table2
 
-Figure 5
+Figure1 shows the initial decision tree model which shows signs of overfitting since the size of the tree is huge. The confusion matrix for the decision tree in figure2 shows that the model is good at predicting outcome 0 compared to class 1. When cross validation was performed on the decision tree model, we can see a stable increase in the accuracy, which is a good indicator that the model is consistently performing well as shown in figure3. Figure4 and 5 represents the pruned decision tree and its confusion matrix, where a slight improvement was observed. The most important predictors for decision trees can be seen in table2 along with their importance. 
 
-The decision boundary surface for SVM with radial kernel is shown in figure 5. The non-linear boundary shows how the RBF kernel is able to capture complex patterns in the data. We can see how the orange region has made its way to the top left side of the plot, where age takes lower values and bedrooms take higher values. This conveys that younger adults who live in large dwellings are more likely to be classified as renters. Then as age and number of bedrooms increases, they’re more likely to be classified as an owner, the same as seen in linear SVM. 
 
-Figure 6 shows the decision boundary for the SVM polynomial kernel. We can infer from the plot that it’s decent at capturing patterns in the data. As age and and house size increases to a ceratin value, the polynomial SVM model tends to classify it as a owner. 
+Figure1 : Decision tree
 
- ![image](https://github.com/user-attachments/assets/756ef515-9ebe-4c3b-b8da-750823871085)
+Figure 2: Confusion matrix - decision tree model
 
-Figure 6
-The models were working well on the test dataset. We got almost the same performance in terms of accuracy and error on the test set as we were getting on the training set. It conveys that the models were not overfitting although we can see that the RBF kernel boundary might be overfitting the data. 
+Figure3: Cross-validation results to find optimal tree size
 
-Figure 6 shows the confusion matrix for the linear SVM, RBF and Polynomial SVM. Class 1 represents the owned category and class 2 represents the rented category. It is evident that the models were good at predicting when a dwelling is owned compared to class 2 but it is also a result of our dataset which is not perfectly balanced. We have more data for class 1 compared to class 2. The results are comparatively better since we have used stratified sampling to deal with the class imbalance. 
-  
- ![image](https://github.com/user-attachments/assets/08eb168d-4004-4db0-b87d-fe06e1a3bf96) ![image](https://github.com/user-attachments/assets/a7d346d3-bb6d-46cf-8f6e-ce1229b4fb50) ![image](https://github.com/user-attachments/assets/6285b6d9-92e5-4d8b-8b98-079d91105ca9)
+Figure4: Pruned decision tree
 
-Figure 6 Confusion matrix for all three models: Linear, RBF, Polynomial SVM kernels
+Figure5: Confusion matrix of pruned decision tree model
+Random forest and bagging displayed good performance in terms of accuracy but they failed to predict class 1 and showed relatively worse performance for class 1 than decision trees. Although gradient boosting did exceptionally well in predicting both class 0 and 1. This shows that it was able to learn patterns in data better than the rest of the models. This comparison is displayed in figure 6,7 and 8. 
+
+Figure6: Confusion matrix of random forest method, Figure7: Confusion matrix of bagging method
+
+Figure8: Confusion matrix of gradient boosting model
+ Multi-class classification task:
+
+**Multi-class classification results**:
+
+| Model                                    | Accuracy |
+|------------------------------------------|----------|
+| Decision tree classifier                 | 68.45%   |
+| Pruned decision tree                     | 79.50%   |
+| Pruned decision tree with class weights  | 60.88%   |
+| Random forest classifier                 | 79.50%   |
+| Gradient boosting classifier             | 78.08%   |
+
+
+Table3 Multi-class classification results
+The results for the multi-class classification task are shown in Table3. Contrary to the binary classification task, here the pruned decision tree, random forest and boosting model proved to be better in terms of accuracy. Although when we look at the confusion matrices for each one of these in figure 10,12 ad 13, we can notice that these models were only good at predicting ‘never used alcohol in the past year’ outcome(class 0). They were extremely bad at capturing the patterns to predict other classes. But when class weights were used for pruned decision trees, we observed slightly better predictions for other classes like class 1 and 2. 
+
+Figure 9 CV results for multi-class
+
+
+Figure 10 confusion matrix for initial decision tree
+
+Figure 11 pruned decision tree
+The same predictors seem to be important for the multi-class classification using decision trees as we noticed in the binary classification task. However, ensemble methods had different predictors that proved to be significant in the prediction of frequency of alcohol used in the past year as shown in table4. 
+
+Table4 Feature importances for random forest model
+
+Figure 12 confusion matrix for pruned decision tree with class weights
+
+Figure 13 confusion matrix for random forest model
+
+**Regression task**:
+
+The regression task was performed where the age of initial alcohol consumption was predicted using decision tree, random forest and gradient boosting method. Mean squared error was calculated to find how well the model performed which is shown in table 5 below. The cross validation results are shown in figure 14 for the pruned decision tree. Random forest and decision tree model with optimal tree size showed better performance compared to the rest. The feature importance of random forest is shown in figure 16 with education feature at the top followed by other predictors. The plot in figure 15 shows the actual versus the predicted values by random forest model. The data points don’t cluster perfectly around the diagonal line. This suggests that the model is not making very good predictions.
+
+**Regression results**       
+
+| Model                          | MSE    |
+|--------------------------------|--------|
+| Decision tree classifier       | 5.350  |
+| Pruned decision tree           | 2.525  |
+| Random forest classifier       | 2.780  |
+| Gradient boosting classifier   | 3.060  |
+
+
+Figure 14 cv results - pruned decision tree
+
+Figure 15 random forest model 
+
+
+Figure 16 Feature importance - random forest model
 
 [Back to top](#table-of-contents)
 
 ---
 
 ## Discussion
-It is worth noting that the IPUMS USA dataset includes a vast array of data that can be used to answer many more questions related to the dwelling’s ownership. This study concentrated specifically on the people's income, age, and education, which was just one component of the data. Regardless of this, our findings provide valuable insights into knowing which variables are important to determine if people will own the house or not. 
+The NSDUH dataset presents a comprehensive overview of behavioral and demographic variables that offer valuable insights into substance use patterns. Our analysis revealed that youth’s feelings about substance use, exposure to other substances like marijuana, parental communication about substance use, the child’s academic achievements, and their attitudes towards school play pivotal roles in influencing their likelihood of consuming alcohol. Specifically, positive school experiences and open conversations about substance risks are linked to a lower likelihood of substance use, underscoring the importance of supportive educational and familial environments.
 
-Apart from income and education, the study was based on several aspects such as the cost of maintaining the space such as electricity, fuel, and gas. Our findings show that predictors such as age, number of bedrooms, cost of utilities and average household income are strong predictors and have a considerable impact on a person's likelihood of homeownership. The data could be further studied by answering questions based on parental education status and income and determining whether or not the person will buy their own home later in life. We also want to see how the results differ if we only look at the data for married couples as a further extension of this report. 
+The gradient boosting model, which was cross-validated to optimize performance, achieved an accuracy rate of 83.12% in predicting whether an individual would consume alcohol. This indicates the model's effectiveness in capturing the complex patterns in factors that contribute to alcohol consumption among youth.
 
-Some of the insights or conclusions we can draw from the models are: 
-1.	Younger adults seem to fall under the renter’s category, which means dwellings are not affordable for young adults who might have less financial stability.
-2.	Older adults are more likely to be owners rather than renters. It was also observed that most of the dwellings that are bought are quite large which shows the preference of families. This could be helpful in real-estate planning. 
-3.	It was also noticed that even though the houses are large but if they are occupied by young adults, they’re more likely to be classified as renters. Same goes for the older adults who live in smaller dwellings, they are more likely an owner regardless of the size of the dwelling. 
-These insights show how our models were able to capture such deeper insights. On test results, the SVM model attained an accuracy of 81.2%, suggesting its usefulness in identifying the residence. Furthermore, adding the RBF or polynomial kernel had no significant effect on the model's accuracy with RBF just doing 82%, slightly higher. However, the study had limitations such as the cross-sectional nature of the data, which limits the ability to infer causality, and self-reported data because the data was too correlated, resulting in data loss of nearly 50%. We didn't have many distinct features to work with, such as bedrooms and rooms, which were significantly associated with each other. Other examples include the relationship between income and highest income, as well as education and education code. Furthermore, the sample size of the dataset was relatively small, which may limit the generalizability of findings to a larger population. 
+It is not clear why the multi-class or regression task did not performing well given the array of significant predictors, perhaps it might be due to the class imbalance that lead to the models not fully learn other outcomes like in multi class classification, the models performed really well in predicting the outcome ‘never used alcohol in the past year’ but failed to accurately predict other classes. The data representing the class 0(never used alcohol) was significantly more when compared to other classes. A dataset that’s equally representative of all classes might be a better one for the multi-class and regression task. Although the regression models did well in terms of their MSEs, the plot of actual vs predicted values clearly shows otherwise. 
+
+It is also important to acknowledge certain limitations in our study, the reliance on self-reported data might introduce biases, which can affect the accuracy of our predictions. The relatively small sample size could also limit the generalizability of our findings to a broader population.
+
+Despite these limitations, our study provides critical insights into the factors that can reduce the likelihood of alcohol and other substance use among youth. These insights reinforce the value of targeted educational and family-oriented interventions. Extending this research to include longitudinal data could help clarify causal relationships and enhance the predictive power of our models. Incorporating a larger and more diverse dataset could improve the generalizability of our results, providing a stronger basis for developing nationwide substance abuse prevention programs.
 
 [Back to top](#table-of-contents)
 
 ---
 
 ## Conclusion
-This study focused on using Support Vector Machine (SVM) models and their kernel extensions, like RBF and polynomial, to predict ownership of a dwelling. We used data sourced from IPUMS USA, originally collected by the US Census. The results were promising, with the models reaching an accuracy of 82% (radial kernel) for the binary classification task of predicting home purchases versus rentals. This suggests that SVMs can be effective for real estate predictions. Features such as age, number of bedrooms, cost of utilities and average household income were strong predictors. The strong performance of the models could be beneficial for real estate agents and policymakers in developing strategies that serve both companies and individuals. For instance, these insights could be used in understanding and planning what type of homes should be prioritized such as family-sized based on number of bedrooms. It could help in potentially stabilizing the housing market and making homes more accessible. Additionally, this analysis could also be used in choosing the right location for new housing projects and increasing the chances of having more homeowners, based on a detailed analysis of the preferences individuals tend to have while buying a dwelling. This study significantly adds to the growing knowledge about applying SVMs with various kernels to homeownership classification tasks and analysis.
+Our research utilized decision tree models and tree-based ensemble methods, including Random Forest, Bagging, and Boosting, to predict alcohol consumption among youth. Employing data from the NSDUH survey, our models achieved commendable accuracies for binary classification tasks, highlighting their effectiveness in substance use prediction.
+
+In binary classification tasks, the gradient boosting model notably achieved an accuracy of 83.12%. The multi-class classification task was only good at predicting if an individual has never used alcohol in the past year, the highest accuracy of 79.50% was achieved by pruned decision tree and random forest model. The regression task on the other hand has showed decent performance with least MSE of 2.58 with pruned decision tree model followed by 2.78 for the random forest model. 
+
+Our findings are significant as they affirm that both decision tree models and ensemble techniques are robust tools for predicting whether an individual might engage in alcohol consumption. Additional studies could expand on this work by incorporating more diverse datasets or by applying these techniques to predict other types of substance use and behavioral outcomes. 
+
+Overall, the effectiveness of our predictive models provides valuable insights for public health officials and educators seeking to implement evidence-based strategies to reduce alcohol misuse among youth. As we continue to refine these models and enhance their accuracy, they hold the potential to significantly impact public health initiatives by enabling more precise and timely interventions.
 
 [Back to top](#table-of-contents)
 
 ---
 
 ## References
-[1] Pew Research Center. (2022, March 23). Key facts about housing affordability in the U.S. Pew Research Center: Short Reads. https://www.pewresearch.org/short-reads/2022/03/23/key-facts-about-housing-affordability-in-the-u-s/
+1. Substance Abuse and Mental Health Services Administration. (2020). National Survey on Drug Use and Health (NSDUH) 2020. [Codebook]. Retrieved from https://www.datafiles.samhsa.gov/sites/default/files/field-uploads-protected/studies/NSDUH2020/NSDUH-2020-datasets/NSDUH-2020-DS0001/NSDUH-2020-DS0001-info/NSDUH2020-DS0001-info-codebook.pdf.
 
-[2] Steven Ruggles, Sarah Flood, Matthew Sobek, Danika Brockman, Grace Cooper,  Stephanie Richards, and Megan Schouweiler. IPUMS USA: Version 13.0 [dataset]. Minneapolis, MN: IPUMS, 2023. https://doi.org/10.18128/D010.V13.0
+2. James, G., Witten, D., Hastie, T., Tibshirani, R., & Taylor, J. (2023). An Introduction to Statistical Learning with Applications in Python. (Original work published 2023) https://hastie.su.domains/ISLP/ISLP_website.pdf.download.html
 
-[3] James, G., Witten, D., Hastie, T., Tibshirani, R., & Taylor, J. (2023). An Introduction to Statistical Learning with Applications in Python. (Original work published 2023) https://hastie.su.domains/ISLP/ISLP_website.pdf.download.html
 
 [Back to top](#table-of-contents)
 
