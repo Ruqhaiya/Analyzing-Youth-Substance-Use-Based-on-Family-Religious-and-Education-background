@@ -10,8 +10,7 @@
 - [Discussion](#discussion)
 - [Conclusion](#conclusion)
 - [References](#references)
---- 
---- 
+---  
 
 ## Abstract
 This study leverages the National Survey on Drug Use and Health (NSDUH) to explore different aspects of youth drug use using decision trees and ensemble methods. This project addresses three key predictions: identifying whether an individual uses alcohol with the help of binary classification, then estimating the frequency of alcohol use over the past year using multi-class classification, and finally predicting the age at which an individual first consumed alcohol using regression techniques. From our analysis, several variables proved to be significant predictors across different models. Factors related to educational achievements (EDUSCHGRD2) and demographic factors such as race (NEWRACE2), income levels (INCOME), and lifetime marijuana use (YFLMJMO) and alcohol consumption standards (STNDALC) were influential in predicting youth drug use behaviors. The binary classification gradient boosting model achieved a good accuracy of 83.12%, however the multi-class classification and regression tasks showed relatively poor performance but nonetheless gave us some insights about the factors related to youth substance abuse. These findings highlight the crucial role of both socio-demographic variables and substance use history in predicting drug use. The findings advocate for the critical role of family background and education in mitigating risky behaviors and provide insights for improving preventive strategies.
