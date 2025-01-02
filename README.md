@@ -1,4 +1,4 @@
-# Analyzing and Predicting Substance Abuse in Youth using Decision Trees and Ensemble Methods
+![image](https://github.com/user-attachments/assets/de6f29da-9be7-4f69-94ef-8b77b987ee6c)# Analyzing and Predicting Substance Abuse in Youth using Decision Trees and Ensemble Methods
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
@@ -86,41 +86,41 @@ Table1 shows the results for the binary classification task which predicted whet
 
 Table1: Binary classification results
 
-![image](https://github.com/user-attachments/assets/04465b8c-83d2-480c-bb2a-586e61e7f7d6)
-
 Table2
 
 Figure1 shows the initial decision tree model which shows signs of overfitting since the size of the tree is huge. The confusion matrix for the decision tree in figure2 shows that the model is good at predicting outcome 0 compared to class 1. When cross validation was performed on the decision tree model, we can see a stable increase in the accuracy, which is a good indicator that the model is consistently performing well as shown in figure3. Figure4 and 5 represents the pruned decision tree and its confusion matrix, where a slight improvement was observed. The most important predictors for decision trees can be seen in table2 along with their importance. 
 
-![image](https://github.com/user-attachments/assets/0c7b0331-4616-4829-8729-b4df16add48a)
+![image](https://github.com/user-attachments/assets/177b46a3-e6a2-4836-85b6-3af49eba5035)
 
 Figure1 : Decision tree
 
-![image](https://github.com/user-attachments/assets/4681f266-780f-4cf7-a0ca-ea4c47e5230d)
+![image](https://github.com/user-attachments/assets/a8ac2d7c-ab20-47d3-9f1b-523e74110974)
 
 Figure 2: Confusion matrix - decision tree model
 
-![image](https://github.com/user-attachments/assets/c777b9bb-0480-48be-b6d1-ba591464e98b)
+![image](https://github.com/user-attachments/assets/2dd22871-c639-465d-8eef-acf1fc2c01fd)
 
 Figure3: Cross-validation results to find optimal tree size
 
-![image](https://github.com/user-attachments/assets/f52da8bc-4cf0-4e2c-903f-95038787b1cc)
+![image](https://github.com/user-attachments/assets/5a0cc663-75a1-41f0-8899-522871f4f1de)
 
 Figure4: Pruned decision tree
 
-![image](https://github.com/user-attachments/assets/aca54c0c-911c-4f6a-9f16-50ff89c8af8c)
+![image](https://github.com/user-attachments/assets/d5490b60-2f86-4e59-9802-5e90d154a1c8)
 
 Figure5: Confusion matrix of pruned decision tree model
 Random forest and bagging displayed good performance in terms of accuracy but they failed to predict class 1 and showed relatively worse performance for class 1 than decision trees. Although gradient boosting did exceptionally well in predicting both class 0 and 1. This shows that it was able to learn patterns in data better than the rest of the models. This comparison is displayed in figure 6,7 and 8. 
 
-![image](https://github.com/user-attachments/assets/90b77c42-6282-4092-bcae-4f08c5cfb125) ![image](https://github.com/user-attachments/assets/01dce582-c89f-45e8-a79a-d9ae504dce1d)
+![image](https://github.com/user-attachments/assets/7ec2511e-f330-49b4-ad92-01cfdf6dda69)
+ ![image](https://github.com/user-attachments/assets/a97fad8a-620e-42e6-8e3f-30fff1371b66)
 
 Figure6: Confusion matrix of random forest method, Figure7: Confusion matrix of bagging method
 
-![image](https://github.com/user-attachments/assets/8e7ea3db-8c2c-4625-9944-a0ead162bf68)
+![image](https://github.com/user-attachments/assets/ea9482bc-5730-4f44-a2d9-1faa6b64dbad)
 
 Figure8: Confusion matrix of gradient boosting model
- Multi-class classification task:
+
+Multi-class classification task:
 
 **Multi-class classification results**:
 
@@ -136,28 +136,28 @@ Figure8: Confusion matrix of gradient boosting model
 Table3 Multi-class classification results
 The results for the multi-class classification task are shown in Table3. Contrary to the binary classification task, here the pruned decision tree, random forest and boosting model proved to be better in terms of accuracy. Although when we look at the confusion matrices for each one of these in figure 10,12 ad 13, we can notice that these models were only good at predicting ‘never used alcohol in the past year’ outcome(class 0). They were extremely bad at capturing the patterns to predict other classes. But when class weights were used for pruned decision trees, we observed slightly better predictions for other classes like class 1 and 2. 
 
-![image](https://github.com/user-attachments/assets/3b6d6838-e7ae-497e-8f2b-c996e93b53dd)
+![image](https://github.com/user-attachments/assets/dc1ef3b8-582f-44b2-b77a-d34685052ca7)
 
 Figure 9 CV results for multi-class
 
-![image](https://github.com/user-attachments/assets/9b9be66b-9b2b-4d01-bb92-e566d9c51ff6)
+![image](https://github.com/user-attachments/assets/064a7b6a-1696-4108-af7a-57d523183479)
 
 Figure 10 confusion matrix for initial decision tree
 
-![image](https://github.com/user-attachments/assets/32fca11d-e477-48cb-9b0e-518060453703)
+![image](https://github.com/user-attachments/assets/92498608-1367-4188-b943-31aac6870529)
 
 Figure 11 pruned decision tree
 The same predictors seem to be important for the multi-class classification using decision trees as we noticed in the binary classification task. However, ensemble methods had different predictors that proved to be significant in the prediction of frequency of alcohol used in the past year as shown in table4. 
 
-![image](https://github.com/user-attachments/assets/fdd80c23-a154-4dc9-85e7-d87e724639aa)
+![image](https://github.com/user-attachments/assets/80c3807d-92d2-49b5-9093-f996d3eb0a9b)
 
 Table4 Feature importances for random forest model
 
-![image](https://github.com/user-attachments/assets/1ac39091-5608-46da-8e6d-0d2f2cf5de63)
+![image](https://github.com/user-attachments/assets/adb03b80-806f-4b64-9ae6-6f6c59217e94)
 
 Figure 12 confusion matrix for pruned decision tree with class weights
 
-![image](https://github.com/user-attachments/assets/381c2e6c-0030-4326-a49e-4101b5c527f8)
+![image](https://github.com/user-attachments/assets/604859c1-a7f6-426c-8826-aeda1232fc12)
 
 Figure 13 confusion matrix for random forest model
 
@@ -174,15 +174,15 @@ The regression task was performed where the age of initial alcohol consumption w
 | Random forest classifier       | 2.780  |
 | Gradient boosting classifier   | 3.060  |
 
-![image](https://github.com/user-attachments/assets/e77fbb13-a17a-4d30-992e-17f974c6e97b)
+![image](https://github.com/user-attachments/assets/03ea13d5-be32-41de-90b8-fa535503b91e)
 
 Figure 14 cv results - pruned decision tree
 
-![image](https://github.com/user-attachments/assets/1455e0d1-31d2-4efd-975a-9156df7c6ca3)
+![image](https://github.com/user-attachments/assets/372ed2c2-468f-41ff-a9d4-c86d57501b43)
 
 Figure 15 random forest model 
 
-![image](https://github.com/user-attachments/assets/24f243fd-5639-4108-9b5e-c0fba8066089)
+![image](https://github.com/user-attachments/assets/5b9a6dc5-ba78-4987-b939-cdca759b9814)
 
 Figure 16 Feature importance - random forest model
 
