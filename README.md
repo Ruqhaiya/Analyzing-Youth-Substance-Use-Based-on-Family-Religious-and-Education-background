@@ -9,7 +9,9 @@
 - [Discussion](#discussion)
 - [Conclusion](#conclusion)
 - [References](#references)
-- 
+
+--- 
+
 ## Abstract
 The aim of this study is to predict whether a dwelling is occupied by owners or renters based on several features related to individual demographics and housing characteristics. We have used Support Vector Machines (SVM) to classify the dataset. Our models achieved up to 82% accuracy in classifying dwellings. It was observed that factors such as Age and Number of bedrooms were significant predictors in determining whether a dwelling is owned or rented followed by other predictors like average house income and cost of utilities. Among the models we built, the linear kernel was recommended for its robustness and simplicity. The findings of this study provides a thorough analysis of the factors influencing dwelling occupancy and uncover deeper patterns which will be useful to real estate professionals in understanding housing trends. 
 
