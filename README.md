@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/de6f29da-9be7-4f69-94ef-8b77b987ee6c)# Analyzing and Predicting Substance Abuse in Youth using Decision Trees and Ensemble Methods
+# Analyzing and Predicting Substance Abuse in Youth using Decision Trees and Ensemble Methods
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
